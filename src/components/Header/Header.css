@@ -1,0 +1,33 @@
+.navbar {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+.navbar .container {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  width: 100vw;
+  padding: 0px;
+}
+.navbar .container h2 {
+  margin-left: 20px;
+}
+.nav-list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+.nav-item {
+  margin: 10px;
+  font-size: 18px;
+}
+.nav-link {
+  text-decoration: none;
+  color: #555;
+}
+.active {
+  color: #111;
+  font-weight: bold;
+}
