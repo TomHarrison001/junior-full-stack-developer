@@ -25,13 +25,14 @@
   height: 1px;
   background: #3c00ac;
 }
-.inputs {
+.user {
   margin-top: 55px;
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
-.input {
+.username,
+.email {
   display: flex;
   align-items: center;
   margin: auto;
@@ -40,31 +41,14 @@
   background: #eee;
   border-radius: 5px;
 }
-.input img {
+.username img,
+.email img {
   margin: 0px 30px;
   width: 45px;
   height: 45px;
 }
-.input input {
-  height: 50px;
-  width: 400px;
-  background: transparent;
-  border: none;
-  outline: none;
+.username p,
+.email p {
   color: #777;
   font-size: 20px;
-}
-.submit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 220px;
-  height: 60px;
-  color: #fff;
-  background: #3c00ac;
-  border-radius: 50px;
-  font-size: 19px;
-  font-weight: 700;
-  cursor: pointer;
-  margin: auto;
 }

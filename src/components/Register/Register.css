@@ -21,10 +21,9 @@
   font-weight: 700;
 }
 .underline {
-  width: 60px;
-  height: 6px;
+  width: 80%;
+  height: 1px;
   background: #3c00ac;
-  border-radius: 5px;
 }
 .inputs {
   margin-top: 55px;
