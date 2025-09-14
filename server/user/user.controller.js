@@ -18,7 +18,9 @@ export const getUser = async (req, res) => {
 
   // check user exists
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ success: false, message: "User not found." });
+    return res
+      .status(404)
+      .json({ success: false, message: "Error: Invalid _id." });
   }
 
   try {
@@ -34,18 +36,42 @@ export const getUser = async (req, res) => {
 export const createUser = async (req, res) => {
   const user = req.body;
 
-  // check for empty fields
-  if (!user.username || !user.email || !user.password) {
+  // check for empty fields`
+  if (
+    !user.username ||
+    !user.email ||
+    !user.password ||
+    !user.confirmPassword
+  ) {
     return res
       .status(400)
       .json({ success: false, message: "Please provide all fields." });
+  }
+  if (user.password != user.confirmPassword) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Passwords don't match." });
+  }
+  if (user.password.length < 8) {
+    return res.status(400).json({
+      success: false,
+      message: "Password must be at least 8 characters.",
+    });
+  }
+
+  // check if username exists
+  const existingUser = await User.find({ username: user.username });
+  if (existingUser != "") {
+    return res
+      .status(400)
+      .json({ success: false, message: "Username exists." });
   }
 
   const newUser = new User(user);
 
   try {
     await newUser.save();
-    res.status(201).json({ success: true, data: newUser });
+    res.status(201).json({ success: true, message: "User created." });
   } catch (error) {
     console.error("Error creating new user:", error.message);
     res.status(500).json({ success: false, message: "Server Error." });
@@ -61,7 +87,7 @@ export const updateUser = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res
       .status(404)
-      .json({ success: false, message: "Error: User not found." });
+      .json({ success: false, message: "Error: Invalid _id." });
   }
 
   try {
@@ -81,7 +107,7 @@ export const deleteUser = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res
       .status(404)
-      .json({ success: false, message: "Error: User not found." });
+      .json({ success: false, message: "Error: Invalid _id." });
   }
 
   try {

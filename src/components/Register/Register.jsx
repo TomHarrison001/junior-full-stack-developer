@@ -1,15 +1,48 @@
 import React, { useState } from 'react';
 import './Register.css';
 import Header from '../Header/Header';
+import axios from "axios";
 
 import username_icon from '../assets/username.png';
 import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 
 const Register = () => {
+    // state variables for form inputs
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const [errorMessage, setErrorMessage] = useState("");
+
+    // handle form submission
+    const register = async (e) => {
+        e.preventDefault();
+        setErrorMessage("");
+        let register_url = window.location.origin + "/users";
+
+        axios.post("http://localhost:5000/users", {
+            username: username,
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword
+        })
+        .then(function (res) {
+            console.log(res);
+            if (res.data.success) {
+                sessionStorage.setItem('username', username);
+                window.location.href = window.location.origin;
+            }
+            console.log("Success:", res.data.success);
+            console.log("Message:", res.data.message);
+        })
+        .catch(function (error) {
+            setErrorMessage(error.response.data.message);
+            console.log("Success:", error.response.data.success);
+            console.log("Message:", error.response.data.message);
+        })
+    };
 
     return (
         <div>
@@ -19,25 +52,26 @@ const Register = () => {
                     <div className="text">Register</div>
                     <div className="underline"></div>
                 </div>
-                <div className="inputs">
+                <form className="inputs" onSubmit={register}>
                     <div className="input">
-                        <img src={username_icon} alt="" />
-                        <input type="text" placeholder='Username'/>
+                        <img src={username_icon} alt="Username" />
+                        <input type="text" name="username" placeholder='Username' onChange={(e) => setUsername(e.target.value)}/>
                     </div>
                     <div className="input">
-                        <img src={email_icon} alt="" />
-                        <input type="email" placeholder='Email'/>
+                        <img src={email_icon} alt="Email" />
+                        <input type="email" name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
                     </div>
                     <div className="input">
-                        <img src={password_icon} alt="" />
-                        <input type="password" placeholder="Password" />
+                        <img src={password_icon} alt="Password" />
+                        <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className="input">
-                        <img src={password_icon} alt="" />
-                        <input type="password" placeholder="Confirm password" />
+                        <img src={password_icon} alt="Confirm password" />
+                        <input type="password" name="confirmPassword" placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)} />
                     </div>
-                    <div className="submit">Register</div>
-                </div>
+                    <div className="errorMessage">{errorMessage}</div>
+                    <input className="submit" type="submit" value="Register"/>
+                </form>
             </div>
         </div>
     )

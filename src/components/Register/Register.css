@@ -25,11 +25,15 @@
   height: 1px;
   background: #3c00ac;
 }
+.errorMessage {
+  color: red;
+}
 .inputs {
-  margin-top: 55px;
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
   gap: 25px;
+  text-align: center;
 }
 .input {
   display: flex;
