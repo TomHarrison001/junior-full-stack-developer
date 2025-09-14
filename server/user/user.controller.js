@@ -12,22 +12,20 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// GET by specific _id request: retrieve a single user
+// GET by specific username request: retrieve a single user
 export const getUser = async (req, res) => {
   const { id } = req.params;
 
-  // check user exists
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res
-      .status(404)
-      .json({ success: false, message: "Error: Invalid _id." });
+  // check if username exists
+  const existingUser = await User.find({ username: id.username });
+  if (existingUser == "") {
+    return res.status(400).json({ success: false, message: "User not found." });
   }
 
   try {
-    const user = await User.findById(id);
-    res.status(200).json({ success: true, data: user });
+    res.status(200).json({ success: true, data: existingUser });
   } catch (error) {
-    console.log("Error fetching user: ", error.message);
+    console.error("Error fetching user:", error.message);
     res.status(500).json({ success: false, message: "Server Error." });
   }
 };

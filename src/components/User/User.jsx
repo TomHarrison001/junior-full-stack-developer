@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './User.css';
 import Header from '../Header/Header';
+import axios from "axios";
 
 import username_icon from '../assets/username.png';
 import email_icon from '../assets/email.png';
@@ -9,7 +10,27 @@ import password_icon from '../assets/password.png';
 const User = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        setUsername(sessionStorage.getItem("username"));
+        
+        axios.get("http://localhost:5000/users", {
+            params: {
+                username: username
+            }
+        })
+        .then(function (res) {
+            if (res.data.success) {
+                setEmail(res.data.data[0].email); 
+            }
+            console.log("Success:", res.data);
+        })
+        .catch(function (error) {
+            setErrorMessage(error.response.data.message);
+            console.log("Success:", error.response.data.success);
+            console.log("Message:", error.response.data.message);
+        })
+    }, [])
 
     return (
         <div>
@@ -21,12 +42,12 @@ const User = () => {
                 </div>
                 <div className="user">
                     <div className="username">
-                        <img src={username_icon} alt="" />
-                        <p>Username</p>
+                        <img src={username_icon} alt="Username" />
+                        <p>{username}</p>
                     </div>
                     <div className="email">
-                        <img src={email_icon} alt="" />
-                        <p>email@example.com</p>
+                        <img src={email_icon} alt="Email" />
+                        <p>{email}</p>
                     </div>
                 </div>
             </div>

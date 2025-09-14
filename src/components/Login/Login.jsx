@@ -23,9 +23,8 @@ const Login = () => {
             password: password,
         })
         .then(function (res) {
-            console.log(res);
             if (res.data.success) {
-                sessionStorage.setItem('email', email);
+                sessionStorage.setItem('username', username);
                 window.location.href = window.location.origin;
             }
             console.log("Success:", res.data.success);

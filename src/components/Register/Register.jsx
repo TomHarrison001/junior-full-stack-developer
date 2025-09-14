@@ -29,7 +29,6 @@ const Register = () => {
             confirmPassword: confirmPassword
         })
         .then(function (res) {
-            console.log(res);
             if (res.data.success) {
                 sessionStorage.setItem('username', username);
                 window.location.href = window.location.origin;
