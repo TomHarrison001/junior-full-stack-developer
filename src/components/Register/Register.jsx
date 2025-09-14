@@ -22,7 +22,7 @@ const Register = () => {
         setErrorMessage("");
         let register_url = window.location.origin + "/users/register";
 
-        axios.post("http://localhost:5000/users/register", {
+        axios.post("http://localhost:5000/user/register", {
             username: username,
             email: email,
             password: password,

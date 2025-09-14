@@ -12,8 +12,8 @@ const User = () => {
 
     useEffect(() => {
         const id = sessionStorage.getItem("id");
-        if (id != "") {
-            axios.get(`http://localhost:5000/users/${id}`)
+        if (id != "" && id != undefined) {
+            axios.get(`http://localhost:5000/user/${id}`)
             .then(function (res) {
                 if (res.data.success) {
                     setUsername(res.data.data.username);
@@ -22,10 +22,12 @@ const User = () => {
                 console.log("Success:", res.data);
             })
             .catch(function (error) {
-                setErrorMessage(error.response.data.message);
                 console.log("Success:", error.response.data.success);
                 console.log("Message:", error.response.data.message);
             })
+        } else {
+            setUsername("Username");
+            setEmail("Email");
         }
     }, [])
 

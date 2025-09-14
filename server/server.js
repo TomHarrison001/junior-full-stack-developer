@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 // Use JSON parsing middleware and user routes
 app.use(express.json());
 app.use(cors());
-app.use("/users", router);
+app.use("/user", router);
 
 app.listen(PORT, () => {
   connectDB();

@@ -13,7 +13,10 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        sessionStorage.setItem("id", "");
+        if (sessionStorage.getItem("id") != "") {
+            sessionStorage.setItem("id", "");
+            window.location.href = window.location.origin + "/login"
+        }
     }, [])
 
     // handle form submission
@@ -22,7 +25,7 @@ const Login = () => {
         setErrorMessage("");
         let login_url = window.location.origin + "/users/login";
 
-        axios.post("http://localhost:5000/users/login", {
+        axios.post("http://localhost:5000/user/login", {
             email: email,
             password: password,
         })

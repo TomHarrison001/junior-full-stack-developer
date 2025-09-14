@@ -9,11 +9,11 @@ const Header = () => {
     useEffect(() => {
         const id = sessionStorage.getItem("id");
         console.log(id)
-        if (id == "") {
+        if (id == "" || id == undefined) {
             setSignedIn(false);
             return;
         }
-        axios.get(`http://localhost:5000/users/${id}`)
+        axios.get(`http://localhost:5000/user/${id}`)
         .then(function (res) {
             console.log(res)
             setSignedIn(res.data.success)
@@ -35,10 +35,10 @@ const Header = () => {
                                 <a className="nav-link" href="/">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/about">About Us</a>
+                                <a className="nav-link" href="/">About Us</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/contact">Contact Us</a>
+                                <a className="nav-link" href="/">Contact Us</a>
                             </li>
                         </ul>
                         <ul className="nav-list">
