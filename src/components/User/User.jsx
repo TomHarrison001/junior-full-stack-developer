@@ -5,31 +5,28 @@ import axios from "axios";
 
 import username_icon from '../assets/username.png';
 import email_icon from '../assets/email.png';
-import password_icon from '../assets/password.png';
 
 const User = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
 
     useEffect(() => {
-        setUsername(sessionStorage.getItem("username"));
-        
-        axios.get("http://localhost:5000/users", {
-            params: {
-                username: username
-            }
-        })
-        .then(function (res) {
-            if (res.data.success) {
-                setEmail(res.data.data[0].email); 
-            }
-            console.log("Success:", res.data);
-        })
-        .catch(function (error) {
-            setErrorMessage(error.response.data.message);
-            console.log("Success:", error.response.data.success);
-            console.log("Message:", error.response.data.message);
-        })
+        const id = sessionStorage.getItem("id");
+        if (id != "") {
+            axios.get(`http://localhost:5000/users/${id}`)
+            .then(function (res) {
+                if (res.data.success) {
+                    setUsername(res.data.data.username);
+                    setEmail(res.data.data.email);
+                }
+                console.log("Success:", res.data);
+            })
+            .catch(function (error) {
+                setErrorMessage(error.response.data.message);
+                console.log("Success:", error.response.data.success);
+                console.log("Message:", error.response.data.message);
+            })
+        }
     }, [])
 
     return (

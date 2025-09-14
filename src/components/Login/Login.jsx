@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import Header from '../Header/Header';
 import axios from "axios";
@@ -12,6 +12,10 @@ const Login = () => {
     
     const [errorMessage, setErrorMessage] = useState("");
 
+    useEffect(() => {
+        sessionStorage.setItem("id", "");
+    }, [])
+
     // handle form submission
     const login = async (e) => {
         e.preventDefault();
@@ -24,11 +28,10 @@ const Login = () => {
         })
         .then(function (res) {
             if (res.data.success) {
-                sessionStorage.setItem('username', username);
+                console.log(res.data)
+                sessionStorage.setItem('id', res.data.data._id);
                 window.location.href = window.location.origin;
             }
-            console.log("Success:", res.data.success);
-            console.log("Message:", res.data.message);
         })
         .catch(function (error) {
             setErrorMessage(error.response.data.message);
