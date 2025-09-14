@@ -20,9 +20,9 @@ const Register = () => {
     const register = async (e) => {
         e.preventDefault();
         setErrorMessage("");
-        let register_url = window.location.origin + "/users";
+        let register_url = window.location.origin + "/users/register";
 
-        axios.post("http://localhost:5000/users", {
+        axios.post("http://localhost:5000/users/register", {
             username: username,
             email: email,
             password: password,

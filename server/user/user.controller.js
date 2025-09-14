@@ -60,20 +60,59 @@ export const createUser = async (req, res) => {
   }
 
   // check if username exists
-  const existingUser = await User.find({ username: user.username });
-  if (existingUser != "") {
+  const existingUsername = await User.find({ username: user.username });
+  if (existingUsername != "") {
     return res
       .status(400)
-      .json({ success: false, message: "Username exists." });
+      .json({ success: false, message: "Username already exists." });
   }
 
-  const newUser = new User(user);
+  // check if email exists
+  const existingEmail = await User.find({ email: user.email });
+  if (existingEmail != "") {
+    return res
+      .status(400)
+      .json({ success: false, message: "Email already used." });
+  }
 
   try {
+    const newUser = new User(user);
     await newUser.save();
     res.status(201).json({ success: true, message: "User created." });
   } catch (error) {
     console.error("Error creating new user:", error.message);
+    res.status(500).json({ success: false, message: "Server Error." });
+  }
+};
+
+// POST request: create a new user
+export const loginUser = async (req, res) => {
+  const user = req.body;
+
+  // check for empty fields`
+  if (!user.email || !user.password) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Please provide all fields." });
+  }
+
+  // check if email exists
+  const existingEmail = await User.find({ email: user.email });
+  if (existingEmail == "") {
+    return res
+      .status(400)
+      .json({ success: false, message: "Email or password is incorrect." });
+  }
+
+  try {
+    if (existingEmail[0].password == user.password)
+      res.status(200).json({ success: true, message: "Logged in." });
+    else
+      res
+        .status(400)
+        .json({ success: false, message: "Email or password is incorrect." });
+  } catch (error) {
+    console.error("Error logging in:", error.message);
     res.status(500).json({ success: false, message: "Server Error." });
   }
 };
