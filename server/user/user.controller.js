@@ -16,8 +16,15 @@ export const getUsers = async (req, res) => {
 export const getUser = async (req, res) => {
   const { id } = req.params;
 
-  // check if username exists
-  const existingUser = await User.find({ username: id.username });
+  // check id is valid
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Error: Invalid _id." });
+  }
+
+  // check if email exists
+  const existingUser = await User.findById(id);
   if (existingUser == "") {
     return res.status(400).json({ success: false, message: "User not found." });
   }
@@ -34,7 +41,7 @@ export const getUser = async (req, res) => {
 export const createUser = async (req, res) => {
   const user = req.body;
 
-  // check for empty fields`
+  // check for empty fields
   if (
     !user.username ||
     !user.email ||
@@ -76,7 +83,7 @@ export const createUser = async (req, res) => {
   try {
     const newUser = new User(user);
     await newUser.save();
-    res.status(201).json({ success: true, message: "User created." });
+    res.status(201).json({ success: true, data: newUser });
   } catch (error) {
     console.error("Error creating new user:", error.message);
     res.status(500).json({ success: false, message: "Server Error." });
@@ -104,7 +111,7 @@ export const loginUser = async (req, res) => {
 
   try {
     if (existingEmail[0].password == user.password)
-      res.status(200).json({ success: true, message: "Logged in." });
+      res.status(200).json({ success: true, data: existingEmail[0] });
     else
       res
         .status(400)
@@ -120,7 +127,7 @@ export const updateUser = async (req, res) => {
   const { id } = req.params;
   const user = req.body;
 
-  // check user exists
+  // check id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res
       .status(404)
@@ -140,7 +147,7 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
 
-  // check user exists
+  // check id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res
       .status(404)
