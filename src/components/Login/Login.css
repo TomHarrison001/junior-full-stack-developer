@@ -40,14 +40,6 @@
   background: #eee;
   border-radius: 5px;
 }
-@media screen and (max-width: 600px) {
-  .container {
-    width: 90vw;
-  }
-  .input {
-    width: 80vw;
-  }
-}
 .input img {
   margin: 0px 30px;
   width: 45px;
@@ -61,6 +53,17 @@
   outline: none;
   color: #777;
   font-size: 20px;
+}
+@media screen and (max-width: 600px) {
+  .container {
+    width: 90vw;
+  }
+  .input {
+    width: 80vw;
+  }
+  .input input {
+    font-size: 14px;
+  }
 }
 .submit {
   display: flex;

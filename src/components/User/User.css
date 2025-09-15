@@ -60,4 +60,8 @@
   .email {
     width: 80vw;
   }
+  .username p,
+  .email p {
+    font-size: 12px;
+  }
 }
