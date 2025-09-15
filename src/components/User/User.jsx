@@ -19,7 +19,6 @@ const User = () => {
                     setUsername(res.data.data.username);
                     setEmail(res.data.data.email);
                 }
-                console.log("Success:", res.data);
             })
             .catch(function (error) {
                 console.log("Success:", error.response.data.success);
