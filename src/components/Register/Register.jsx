@@ -35,9 +35,10 @@ const Register = () => {
             }
         })
         .catch(function (error) {
-            setErrorMessage(error.response.data.message);
-            console.log("Success:", error.response.data.success);
-            console.log("Message:", error.response.data.message);
+            if (error.response)
+                setErrorMessage(error.response.data.message);
+            else
+                setErrorMessage("500: Server Error.");
         })
     };
 

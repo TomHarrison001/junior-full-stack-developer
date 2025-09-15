@@ -21,8 +21,10 @@ const User = () => {
                 }
             })
             .catch(function (error) {
-                console.log("Success:", error.response.data.success);
-                console.log("Message:", error.response.data.message);
+                if (error.response)
+                    console.log(error.response.data.message);
+                else
+                    console.log("500: Server Error.");
             })
         } else {
             setUsername("Username");
