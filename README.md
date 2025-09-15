@@ -14,6 +14,7 @@ This is an application built using:
 - Validation + verification methods
 - RESTful APIs
 - JSON Web Token
+- Responsive design
 
 ## Get started
 
