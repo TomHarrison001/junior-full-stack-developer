@@ -16,14 +16,14 @@
   margin-top: 30px;
 }
 .text {
-  color: #3c00ac;
+  color: #2d2d2d;
   font-size: 48px;
   font-weight: 700;
 }
 .underline {
   width: 80%;
   height: 1px;
-  background: #3c00ac;
+  background: #2d2d2d;
 }
 .user {
   margin-top: 55px;
@@ -51,4 +51,13 @@
 .email p {
   color: #777;
   font-size: 20px;
+}
+@media screen and (max-width: 600px) {
+  .container {
+    width: 90vw;
+  }
+  .username,
+  .email {
+    width: 80vw;
+  }
 }

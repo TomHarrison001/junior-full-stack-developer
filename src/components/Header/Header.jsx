@@ -27,28 +27,18 @@ const Header = () => {
         <div>
             <nav className="navbar">
                 <div className="container">
-                    <h2>Company Name</h2>
-                    <div className="lists">
-                        <ul className="nav-list">
-                            <li className="nav-item">
-                                <a className="nav-link" href="/">Home</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/">About Us</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/">Contact Us</a>
-                            </li>
-                        </ul>
-                        <ul className="nav-list">
-                            <li className="nav-item">
-                                <a className="nav-link" href={signedIn ? "/" : "/register"}>{signedIn ? username : "Register"}</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/login">{signedIn ? "Logout" : "Login"}</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <a href="/"><h2>Tom Harrison</h2></a>
+                    <ul className="nav-list">
+                        <li className="nav-item">
+                            <a className="nav-link" href="/">Home</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href={signedIn ? "/user" : "/register"}>{signedIn ? username : "Register"}</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/login">{signedIn ? "Logout" : "Login"}</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
         </div>

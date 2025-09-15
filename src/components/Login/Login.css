@@ -16,14 +16,14 @@
   margin-top: 30px;
 }
 .text {
-  color: #3c00ac;
+  color: #2d2d2d;
   font-size: 48px;
   font-weight: 700;
 }
 .underline {
   width: 80%;
   height: 1px;
-  background: #3c00ac;
+  background: #2d2d2d;
 }
 .inputs {
   margin-top: 55px;
@@ -39,6 +39,14 @@
   height: 80px;
   background: #eee;
   border-radius: 5px;
+}
+@media screen and (max-width: 600px) {
+  .container {
+    width: 90vw;
+  }
+  .input {
+    width: 80vw;
+  }
 }
 .input img {
   margin: 0px 30px;
@@ -61,7 +69,7 @@
   width: 220px;
   height: 60px;
   color: #fff;
-  background: #3c00ac;
+  background: #e48900;
   border-radius: 50px;
   font-size: 19px;
   font-weight: 700;
