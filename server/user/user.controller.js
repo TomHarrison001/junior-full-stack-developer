@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 import User from "./user.model.js";
+
+dotenv.config();
 
 // GET request: retrieve all users
 export const getUsers = async (req, res) => {
@@ -14,6 +18,21 @@ export const getUsers = async (req, res) => {
 
 // GET by specific username request: retrieve a single user
 export const getUser = async (req, res) => {
+  if (req.session.authorization) {
+    let token = req.session.authorization["accessToken"]; // jwt access token
+
+    // verify jwt token for user auth
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (!err) {
+        req.user = user; // set authenticated user data on the req object
+      } else {
+        return res
+          .status(403)
+          .json({ success: false, message: "User not authenticated" });
+      }
+    });
+  }
+
   const { id } = req.params;
 
   // check id is valid
@@ -80,6 +99,16 @@ export const createUser = async (req, res) => {
       .json({ success: false, message: "Email already used." });
   }
 
+  // jwt token
+  let accessToken = jwt.sign(user, process.env.JWT_SECRET, {
+    expiresIn: 60 * 10,
+  }); // 10 min expiry
+
+  // store access token in session
+  req.session.authorization = {
+    accessToken,
+  };
+
   try {
     const newUser = new User(user);
     await newUser.save();
@@ -108,6 +137,16 @@ export const loginUser = async (req, res) => {
       .status(400)
       .json({ success: false, message: "Email or password is incorrect." });
   }
+
+  // jwt token
+  let accessToken = jwt.sign(user, process.env.JWT_SECRET, {
+    expiresIn: 60 * 10,
+  }); // 10 min expiry
+
+  // store access token in session
+  req.session.authorization = {
+    accessToken,
+  };
 
   try {
     if (existingEmail[0].password == user.password)
