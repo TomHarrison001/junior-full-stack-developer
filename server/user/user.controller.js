@@ -49,7 +49,7 @@ export const getUser = async (req, res) => {
   }
 
   try {
-    res.status(200).json({ success: true, data: existingUser });
+    res.status(200).json({ success: true, username: existingUser.username, email: existingUser.email });
   } catch (error) {
     console.error("Error fetching user:", error.message);
     res.status(500).json({ success: false, message: "Server Error." });
@@ -89,7 +89,7 @@ export const createUser = async (req, res) => {
   try {
     const newUser = new User(user);
     await newUser.save();
-    res.status(201).json({ success: true, data: newUser });
+    res.status(201).json({ success: true, _id: newUser._id });
   } catch (error) {
     console.error("Error creating new user:", error.message);
     res.status(500).json({ success: false, message: "Server Error." });
@@ -120,7 +120,7 @@ export const loginUser = async (req, res) => {
 
   try {
     if (existingEmail[0].password == user.password)
-      res.status(200).json({ success: true, data: existingEmail[0] });
+      res.status(200).json({ success: true, _id: existingEmail[0]._id });
     else
       res
         .status(400)

@@ -16,7 +16,7 @@ const Header = () => {
         axios.get(`http://localhost:5000/user/${id}`)
         .then(function (res) {
             setSignedIn(res.data.success)
-            setUsername(res.data.data.username)
+            setUsername(res.data.username)
         })
         .catch(function (error) {
             setSignedIn(false);

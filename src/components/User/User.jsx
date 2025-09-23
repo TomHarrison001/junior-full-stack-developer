@@ -16,8 +16,8 @@ const User = () => {
             axios.get(`http://localhost:5000/user/${id}`)
             .then(function (res) {
                 if (res.data.success) {
-                    setUsername(res.data.data.username);
-                    setEmail(res.data.data.email);
+                    setUsername(res.data.username);
+                    setEmail(res.data.email);
                 }
             })
             .catch(function (error) {

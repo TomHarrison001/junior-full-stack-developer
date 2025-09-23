@@ -41,7 +41,7 @@ const Login = () => {
         })
         .then(function (res) {
             if (res.data.success) {
-                sessionStorage.setItem('id', res.data.data._id);
+                sessionStorage.setItem('id', res.data._id);
                 window.location.href = window.location.origin + "/user";
             }
             setLoading(false);
