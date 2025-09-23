@@ -36,7 +36,7 @@ const Login = () => {
         }
 
         axios.post("http://localhost:5000/user/login", {
-            email: email,
+            email: email.toLowerCase(),
             password: password,
         })
         .then(function (res) {

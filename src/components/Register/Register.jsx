@@ -46,7 +46,7 @@ const Register = () => {
 
         axios.post("http://localhost:5000/user/register", {
             username: username,
-            email: email,
+            email: email.toLowerCase(),
             password: password,
             confirmPassword: confirmPassword
         })
