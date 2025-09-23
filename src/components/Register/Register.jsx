@@ -25,6 +25,25 @@ const Register = () => {
         setErrorMessage("");
         let register_url = window.location.origin + "/users/register";
 
+        // check for empty fields
+        if (!username || !email || !password || !confirmPassword) {
+            setErrorMessage("Please provide all fields.");
+            setLoading(false);
+            return;
+        }
+        // check passwords match
+        if (password != confirmPassword) {
+            setErrorMessage("Passwords don't match.");
+            setLoading(false);
+            return;
+        }
+        // check password is at least 8 characters
+        if (password.length < 8) {
+            setErrorMessage("Password must be at least 8 characters.");
+            setLoading(false);
+            return;
+        }
+
         axios.post("http://localhost:5000/user/register", {
             username: username,
             email: email,

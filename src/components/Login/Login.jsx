@@ -28,6 +28,13 @@ const Login = () => {
         setErrorMessage("");
         let login_url = window.location.origin + "/users/login";
 
+        // check for empty fields
+        if (!email || !password) {
+            setErrorMessage("Please provide all fields.");
+            setLoading(false);
+            return;
+        }
+
         axios.post("http://localhost:5000/user/login", {
             email: email,
             password: password,

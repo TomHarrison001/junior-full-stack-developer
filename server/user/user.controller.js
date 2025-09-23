@@ -60,29 +60,6 @@ export const getUser = async (req, res) => {
 export const createUser = async (req, res) => {
   const user = req.body;
 
-  // check for empty fields
-  if (
-    !user.username ||
-    !user.email ||
-    !user.password ||
-    !user.confirmPassword
-  ) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Please provide all fields." });
-  }
-  if (user.password != user.confirmPassword) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Passwords don't match." });
-  }
-  if (user.password.length < 8) {
-    return res.status(400).json({
-      success: false,
-      message: "Password must be at least 8 characters.",
-    });
-  }
-
   // check if username exists
   const existingUsername = await User.find({ username: user.username });
   if (existingUsername != "") {
@@ -122,13 +99,6 @@ export const createUser = async (req, res) => {
 // POST request: create a new user
 export const loginUser = async (req, res) => {
   const user = req.body;
-
-  // check for empty fields`
-  if (!user.email || !user.password) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Please provide all fields." });
-  }
 
   // check if email exists
   const existingEmail = await User.find({ email: user.email });
