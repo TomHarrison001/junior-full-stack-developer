@@ -31,8 +31,8 @@ JWT_SECRET
 5. Start the server `node ./server/server.js`
 6. In another terminal, start the react app:
 
-- `npm run start` to run in development mode.
-- `npm run build` to build the app for production.
+- `npm start` to run in development mode.
+- `npm build` to build the app for production.
 
 7. Open http://localhost:3000/ to view the app in web mode
 
