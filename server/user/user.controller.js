@@ -1,9 +1,15 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs-react";
+import isaac from "isaac";
 import User from "./user.model.js";
 
 dotenv.config();
+bcrypt.setRandomFallback((len) => {
+	const buff = new Uint8Array(len);
+	return buff.map(() => Math.floor(isaac.random() * 256));
+});
 
 // GET request: retrieve all users
 export const getUsers = async (req, res) => {
@@ -87,6 +93,8 @@ export const createUser = async (req, res) => {
   };
 
   try {
+    const encryptedPassword = bcrypt.hashSync(user.password, 10)
+    user.password = encryptedPassword;
     const newUser = new User(user);
     await newUser.save();
     res.status(201).json({ success: true, _id: newUser._id });
@@ -119,7 +127,8 @@ export const loginUser = async (req, res) => {
   };
 
   try {
-    if (existingEmail[0].password == user.password)
+    const passwordMatch = bcrypt.compareSync(user.password, existingEmail[0].password);
+    if (passwordMatch)
       res.status(200).json({ success: true, _id: existingEmail[0]._id });
     else
       res

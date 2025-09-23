@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "axios": "^1.12.1",
+    "bcryptjs-react": "^2.4.6",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
+    "isaac": "^0.0.5",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.1",
     "react": "^19.1.1",
