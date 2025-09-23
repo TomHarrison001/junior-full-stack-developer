@@ -1,13 +1,11 @@
 import React from 'react';
 import './Homepage.css';
-import Header from '../Header/Header';
 
 import coffee_image from '../assets/coffee.png';
 
 const Homepage = () => {
     return (
         <div>
-            <Header/>
             <div className="homepage-container">
                 <div className="header">
                     <div className="text">Homepage</div>

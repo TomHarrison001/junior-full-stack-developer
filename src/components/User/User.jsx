@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './User.css';
-import Header from '../Header/Header';
 import axios from "axios";
 
 import username_icon from '../assets/username.png';
@@ -34,7 +33,6 @@ const User = () => {
 
     return (
         <div>
-            <Header/>
             <div className="container">
                 <div className="header">
                     <div className="text">User</div>

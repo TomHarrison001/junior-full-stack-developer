@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
-import Header from '../Header/Header';
 import Spinner from '../Spinner/Spinner';
 import axios from "axios";
 
@@ -57,7 +56,6 @@ const Login = () => {
 
     return (
         <div>
-            <Header/>
             <div className="container">
                 <div className="header">
                     <div className="text">Login</div>

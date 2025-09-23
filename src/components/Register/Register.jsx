@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Register.css';
-import Header from '../Header/Header';
 import Spinner from '../Spinner/Spinner';
 import axios from "axios";
 
@@ -68,7 +67,6 @@ const Register = () => {
 
     return (
         <div>
-            <Header/>
             <div className="container">
                 <div className="header">
                     <div className="text">Register</div>
