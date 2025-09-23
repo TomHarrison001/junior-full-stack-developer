@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
 import Header from '../Header/Header';
+import Spinner from '../Spinner/Spinner';
 import axios from "axios";
 
 import email_icon from '../assets/email.png';
@@ -11,6 +12,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     
     const [errorMessage, setErrorMessage] = useState("");
+        const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (sessionStorage.getItem("id") != "") {
@@ -22,6 +24,7 @@ const Login = () => {
     // handle form submission
     const login = async (e) => {
         e.preventDefault();
+        setLoading(true);
         setErrorMessage("");
         let login_url = window.location.origin + "/users/login";
 
@@ -34,12 +37,14 @@ const Login = () => {
                 sessionStorage.setItem('id', res.data.data._id);
                 window.location.href = window.location.origin + "/user";
             }
+            setLoading(false);
         })
         .catch(function (error) {
             if (error.response)
                 setErrorMessage(error.response.data.message);
             else
                 setErrorMessage("500: Server Error.");
+            setLoading(false);
         })
     };
 
@@ -51,18 +56,22 @@ const Login = () => {
                     <div className="text">Login</div>
                     <div className="underline"></div>
                 </div>
-                <form className="inputs" onSubmit={login}>
-                    <div className="input">
-                        <img src={email_icon} alt="Email" />
-                        <input type="email" name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
-                    </div>
-                    <div className="input">
-                        <img src={password_icon} alt="Password" />
-                        <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                    </div>
-                    <div className="errorMessage">{errorMessage}</div>
-                    <input className="submit" type="submit" value="Login"/>
-                </form>
+                {loading ? (
+                    <Spinner/>
+                ) : (
+                    <form className="inputs" onSubmit={login}>
+                        <div className="input">
+                            <img src={email_icon} alt="Email" />
+                            <input type="email" name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
+                        </div>
+                        <div className="input">
+                            <img src={password_icon} alt="Password" />
+                            <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                        </div>
+                        <div className="errorMessage">{errorMessage}</div>
+                        <input className="submit" type="submit" value="Login"/>
+                    </form>
+                )}
             </div>
         </div>
     )

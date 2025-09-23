@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Register.css';
 import Header from '../Header/Header';
+import Spinner from '../Spinner/Spinner';
 import axios from "axios";
 
 import username_icon from '../assets/username.png';
@@ -15,10 +16,12 @@ const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
     // handle form submission
     const register = async (e) => {
         e.preventDefault();
+        setLoading(true);
         setErrorMessage("");
         let register_url = window.location.origin + "/users/register";
 
@@ -33,12 +36,14 @@ const Register = () => {
                 sessionStorage.setItem('id', res.data.data._id);
                 window.location.href = window.location.origin + "/user";
             }
+            setLoading(false);
         })
         .catch(function (error) {
             if (error.response)
                 setErrorMessage(error.response.data.message);
             else
                 setErrorMessage("500: Server Error.");
+            setLoading(false);
         })
     };
 
@@ -50,26 +55,30 @@ const Register = () => {
                     <div className="text">Register</div>
                     <div className="underline"></div>
                 </div>
-                <form className="inputs" onSubmit={register}>
-                    <div className="input">
-                        <img src={username_icon} alt="Username" />
-                        <input type="text" name="username" placeholder='Username' onChange={(e) => setUsername(e.target.value)}/>
-                    </div>
-                    <div className="input">
-                        <img src={email_icon} alt="Email" />
-                        <input type="email" name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
-                    </div>
-                    <div className="input">
-                        <img src={password_icon} alt="Password" />
-                        <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                    </div>
-                    <div className="input">
-                        <img src={password_icon} alt="Confirm password" />
-                        <input type="password" name="confirmPassword" placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)} />
-                    </div>
-                    <div className="errorMessage">{errorMessage}</div>
-                    <input className="submit" type="submit" value="Register"/>
-                </form>
+                {loading ? (
+                    <Spinner/>
+                ) : (
+                    <form className="inputs" onSubmit={register}>
+                        <div className="input">
+                            <img src={username_icon} alt="Username" />
+                            <input type="text" name="username" placeholder='Username' onChange={(e) => setUsername(e.target.value)}/>
+                        </div>
+                        <div className="input">
+                            <img src={email_icon} alt="Email" />
+                            <input type="email" name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
+                        </div>
+                        <div className="input">
+                            <img src={password_icon} alt="Password" />
+                            <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                        </div>
+                        <div className="input">
+                            <img src={password_icon} alt="Confirm password" />
+                            <input type="password" name="confirmPassword" placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)} />
+                        </div>
+                        <div className="errorMessage">{errorMessage}</div>
+                        <input className="submit" type="submit" value="Register"/>
+                    </form>
+                )}
             </div>
         </div>
     )
